@@ -9,12 +9,21 @@ namespace eAgenda.WinApp
 
         RepositorioContato repositorioContato;
 
+        public static TelaPrincipalForm Instancia { get; private set; }
+
         public TelaPrincipalForm()
         {
             InitializeComponent();
             lblTipoCadastro.Text = string.Empty;
 
             repositorioContato = new RepositorioContato();
+
+            Instancia = this;
+        }
+
+        public void AtualizarRodape(string texto)
+        {
+            statusLabelPrincipal.Text = texto;
         }
 
         private void contatosMenuItem_Click(object sender, EventArgs e)
@@ -37,6 +46,16 @@ namespace eAgenda.WinApp
             controlador.Adicionar();
         }
 
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            controlador.Editar();
+        }
+
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            controlador.Excluir();
+        }
+
         private void ConfigurarToolTips(ControladorBase controladorSelecionado)
         {
             btnAdicionar.ToolTipText = controladorSelecionado.ToolTipAdicionar;
@@ -51,5 +70,12 @@ namespace eAgenda.WinApp
             pnlRegistros.Controls.Clear();
             pnlRegistros.Controls.Add(listagemContato);
         }
+
+        private void TelaPrincipalForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

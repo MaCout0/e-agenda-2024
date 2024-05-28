@@ -23,4 +23,10 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ModuloTarefas\" />
+    <Folder Include="ModuloDespesas\" />
+    <Folder Include="ModuloCategoriaDespesas\" />
+  </ItemGroup>
+
 </Project>

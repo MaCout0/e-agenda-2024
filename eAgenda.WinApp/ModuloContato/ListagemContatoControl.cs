@@ -14,5 +14,19 @@
             foreach (Contato contato in contatos)
                 listContatos.Items.Add(contato);
         }
+
+        public Contato ObterRegistroSelecionado()
+        {
+
+            if (listContatos.SelectedItems == null)
+                return null;
+
+            return (Contato)listContatos.SelectedItem;
+        }
+
+        private void listContatos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

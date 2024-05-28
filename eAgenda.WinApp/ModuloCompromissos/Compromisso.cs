@@ -1,8 +1,14 @@
 ﻿using eAgenda.ConsoleApp.Compartilhado;
+using eAgenda.WinApp.ModuloContato;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace eAgenda.WinApp.ModuloContato
+namespace eAgenda.WinApp.ModuloCompromissos
 {
-    public class Contato : EntidadeBase
+    internal class Compromisso : EntidadeBase
     {
         public string Nome { get; set; }
         public string Telefone { get; set; }
@@ -10,7 +16,7 @@ namespace eAgenda.WinApp.ModuloContato
         public string Empresa { get; set; }
         public string Cargo { get; set; }
 
-        public Contato(string nome, string telefone, string email, string empresa, string cargo)
+        public Compromisso(string nome, string telefone, string email, string empresa, string cargo)
         {
             Nome = nome;
             Telefone = telefone;
@@ -26,11 +32,11 @@ namespace eAgenda.WinApp.ModuloContato
             if (string.IsNullOrEmpty(Nome.Trim()))
                 erros.Add("O campo \"nome\" é obrigatório");
 
-            if (string.IsNullOrEmpty(Email.Trim()))
-                erros.Add("O campo \"email\" é obrigatório");
-
             if (string.IsNullOrEmpty(Telefone.Trim()))
                 erros.Add("O campo \"telefone\" é obrigatório");
+
+            if (string.IsNullOrEmpty(Email.Trim()))
+                erros.Add("O campo \"email\" é obrigatório");
 
             if (string.IsNullOrEmpty(Cargo.Trim()))
                 erros.Add("O campo \"cargo\" é obrigatório");
@@ -43,7 +49,7 @@ namespace eAgenda.WinApp.ModuloContato
 
         public override void AtualizarRegistro(EntidadeBase novoRegistro)
         {
-            Contato atualizado = (Contato)novoRegistro;
+            Compromisso atualizado = (Compromisso)novoRegistro;
 
             Nome = atualizado.Nome;
             Email = atualizado.Email;

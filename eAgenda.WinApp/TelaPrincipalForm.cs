@@ -1,4 +1,5 @@
 using eAgenda.WinApp.Compartilhado;
+using eAgenda.WinApp.ModuloCompromissos;
 using eAgenda.WinApp.ModuloContato;
 
 namespace eAgenda.WinApp
@@ -9,6 +10,8 @@ namespace eAgenda.WinApp
 
         RepositorioContato repositorioContato;
 
+        RepositorioCompromisso repositorioCompromisso;
+
         public static TelaPrincipalForm Instancia { get; private set; }
 
         public TelaPrincipalForm()
@@ -17,6 +20,17 @@ namespace eAgenda.WinApp
             lblTipoCadastro.Text = string.Empty;
 
             repositorioContato = new RepositorioContato();
+            repositorioCompromisso = new RepositorioCompromisso();
+
+            Contato contato = new Contato("Alexandre Rech", "49 985052123", "rech@gmail.com", "Academia do Programador", "CEO");
+            repositorioContato.Cadastrar(contato);
+
+            DateTime data = DateTime.Today.AddDays(-3);
+            TimeSpan horaInicio = new TimeSpan(09, 00, 00);
+            TimeSpan horaTermino = new TimeSpan(10, 00, 00);
+
+            Compromisso compromisso = new Compromisso("Reunião", "MidiLages", "www.discord.com", data, horaInicio, horaTermino, contato);
+            repositorioCompromisso.Cadastrar(compromisso);
 
             Instancia = this;
         }
@@ -38,7 +52,12 @@ namespace eAgenda.WinApp
 
         private void compromissosMenuItem_Click(object sender, EventArgs e)
         {
+            controlador = new ControladorCompromisso(repositorioCompromisso, repositorioContato);
 
+            lblTipoCadastro.Text = "Cadastro de " + controlador.TipoCadastro;
+
+            ConfigurarToolTips(controlador);
+            ConfigurarListagem(controlador);
         }
 
         private void btnAdicionar_Click(object sender, EventArgs e)
@@ -54,6 +73,11 @@ namespace eAgenda.WinApp
         private void btnExcluir_Click(object sender, EventArgs e)
         {
             controlador.Excluir();
+        }
+
+        private void btnFiltrar_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void ConfigurarToolTips(ControladorBase controladorSelecionado)
@@ -75,7 +99,5 @@ namespace eAgenda.WinApp
         {
 
         }
-
-        
     }
 }

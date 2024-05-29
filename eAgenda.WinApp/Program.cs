@@ -1,3 +1,5 @@
+using eAgenda.WinApp.ModuloCompromissos;
+
 namespace eAgenda.WinApp
 {
     internal static class Program
@@ -12,6 +14,7 @@ namespace eAgenda.WinApp
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new TelaPrincipalForm());
+            //Application.Run(new TelaCompromissoForm());
         }
     }
 }

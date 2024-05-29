@@ -1,48 +1,73 @@
 ﻿using eAgenda.ConsoleApp.Compartilhado;
 using eAgenda.WinApp.ModuloContato;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eAgenda.WinApp.ModuloCompromissos
 {
-    internal class Compromisso : EntidadeBase
+    public class Compromisso : EntidadeBase
     {
-        public string Nome { get; set; }
-        public string Telefone { get; set; }
-        public string Email { get; set; }
-        public string Empresa { get; set; }
-        public string Cargo { get; set; }
+        public string Assunto { get; set; }
 
-        public Compromisso(string nome, string telefone, string email, string empresa, string cargo)
+        public DateTime Data { get; set; }
+        public TimeSpan HoraInicio { get; set; }
+        public TimeSpan HoraTermino { get; set; }
+
+        public Contato Contato { get; set; }
+
+        public string Local { get; set; }
+        public string Link { get; set; }
+
+        public TipoCompromissoEnum TipoCompromisso
         {
-            Nome = nome;
-            Telefone = telefone;
-            Email = email;
-            Empresa = empresa;
-            Cargo = cargo;
+            get
+            {
+                TipoCompromissoEnum tipoSelecionado;
+
+                if (Local.Length > 0)
+                    tipoSelecionado = TipoCompromissoEnum.Presencial;
+                else
+                    tipoSelecionado = TipoCompromissoEnum.Remoto;
+
+                return tipoSelecionado;
+            }
+        }
+
+        public Compromisso(
+            string assunto,
+            string local,
+            string link,
+            DateTime data,
+            TimeSpan horaInicio,
+            TimeSpan horaTermino,
+            Contato contato
+        )
+        {
+            Assunto = assunto;
+            Local = local;
+            Link = link;
+            Data = data;
+            HoraInicio = horaInicio;
+            HoraTermino = horaTermino;
+            Contato = contato;
         }
 
         public override List<string> Validar()
         {
             List<string> erros = new List<string>();
 
-            if (string.IsNullOrEmpty(Nome.Trim()))
-                erros.Add("O campo \"nome\" é obrigatório");
+            if (string.IsNullOrEmpty(Assunto.Trim()))
+                erros.Add("O campo \"assunto\" é obrigatório");
 
-            if (string.IsNullOrEmpty(Telefone.Trim()))
-                erros.Add("O campo \"telefone\" é obrigatório");
+            if (string.IsNullOrEmpty(Local.Trim()) && string.IsNullOrEmpty(Link.Trim()))
+                erros.Add("O campo \"local / link\" é obrigatório");
 
-            if (string.IsNullOrEmpty(Email.Trim()))
-                erros.Add("O campo \"email\" é obrigatório");
+            if (!string.IsNullOrEmpty(Local.Trim()) && !string.IsNullOrEmpty(Link.Trim()))
+                erros.Add("Os campos \"local\" e \"link\" são mutualmente exclusivos, preencha apenas um");
 
-            if (string.IsNullOrEmpty(Cargo.Trim()))
-                erros.Add("O campo \"cargo\" é obrigatório");
+            if (HoraInicio > HoraTermino)
+                erros.Add("A hora de início não pode ser depois da hora de término.");
 
-            if (string.IsNullOrEmpty(Empresa.Trim()))
-                erros.Add("O campo \"empresa\" é obrigatório");
+            if (HoraTermino < HoraInicio)
+                erros.Add("A hora de término não pode ser antes da hora de início.");
 
             return erros;
         }
@@ -51,16 +76,20 @@ namespace eAgenda.WinApp.ModuloCompromissos
         {
             Compromisso atualizado = (Compromisso)novoRegistro;
 
-            Nome = atualizado.Nome;
-            Email = atualizado.Email;
-            Telefone = atualizado.Telefone;
-            Cargo = atualizado.Cargo;
-            Empresa = atualizado.Empresa;
+            Assunto = atualizado.Assunto;
+            Local = atualizado.Local;
+            Link = atualizado.Link;
+            Data = atualizado.Data;
+            HoraInicio = atualizado.HoraInicio;
+            HoraTermino = atualizado.HoraTermino;
+            Contato = atualizado.Contato;
         }
 
         public override string ToString()
         {
-            return $"Id: {Id}, Nome: {Nome}, Telefone: {Telefone}, Email: {Email} Empresa: {Empresa}, Cargo: {Cargo}";
+            string nomeContato = Contato == null ? string.Empty : Contato.Nome;
+
+            return $"Id: {Id}, Assunto: {Assunto}, Data: {Data.ToShortDateString()}, Início: {HoraInicio.ToString(@"hh\:mm")}, Término: {HoraTermino.ToString(@"hh\:mm")}, Contato: {nomeContato}, Tipo: { TipoCompromisso.ToString()}";
         }
     }
 }

@@ -3,7 +3,7 @@ using eAgenda.WinApp.ModuloContato;
 
 namespace eAgenda.WinApp.ModuloCompromissos
 {
-    public class ControladorCompromisso : ControladorBase
+    public class ControladorCompromisso : ControladorBase, IControladorFiltravel
     {
 
         private ListagemCompromissoControl listagemCompromisso;
@@ -17,7 +17,9 @@ namespace eAgenda.WinApp.ModuloCompromissos
 
         public override string ToolTipEditar { get { return "Editar compromisso existente"; } }
 
-        public override string ToolTipExcluir { get { return "excluiri compromisso existente"; } }
+        public override string ToolTipExcluir { get { return "Excluir compromisso existente"; } }
+
+        public string ToolTipFiltrar { get { return "Filtrar Compromissos"; } }
 
 
         public ControladorCompromisso(RepositorioCompromisso repositorioCompromisso, RepositorioContato repositorioContato)
@@ -121,6 +123,33 @@ namespace eAgenda.WinApp.ModuloCompromissos
             TelaPrincipalForm
                .Instancia
                .AtualizarRodape($"O registro \"{compromissoSelecionado.Assunto}\" foi excluído com sucesso!");
+        }
+
+        public void Filtrar()
+        {
+            TelaFiltroCompromissoForm telaFiltro = new TelaFiltroCompromissoForm();
+
+            DialogResult resultado = telaFiltro.ShowDialog();
+
+            if (resultado != DialogResult.OK)
+                return;
+
+            TipoFiltroCompromissoEnum filtroSelecionado = telaFiltro.FiltroSelecionado;
+
+            List<Compromisso> compromissosSelecionados;
+
+            if (filtroSelecionado == TipoFiltroCompromissoEnum.Passados)
+                compromissosSelecionados = repositorioCompromisso.SelecionarCompromissosPassados();
+
+            else if (filtroSelecionado == TipoFiltroCompromissoEnum.Futuros)
+                compromissosSelecionados = repositorioCompromisso.SelecionarCompromissosFuturos();
+
+            else
+                compromissosSelecionados = repositorioCompromisso.SelecionarTodos();
+
+            listagemCompromisso.AtualizarRegistros(compromissosSelecionados);
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"Visualizando {compromissosSelecionados.Count} registros...");
         }
 
         public override UserControl ObterListagem()

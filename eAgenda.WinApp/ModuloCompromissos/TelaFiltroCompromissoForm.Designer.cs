@@ -31,9 +31,9 @@
             btnGravar = new Button();
             btnCancelar = new Button();
             groupBox1 = new GroupBox();
-            rdbTodosCompromissos = new RadioButton();
-            rdbCompromissosPassados = new RadioButton();
             rdbCompromissosFuturos = new RadioButton();
+            rdbCompromissosPassados = new RadioButton();
+            rdbTodosCompromissos = new RadioButton();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -73,16 +73,15 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Selecione um Filtro:";
             // 
-            // rdbTodosCompromissos
+            // rdbCompromissosFuturos
             // 
-            rdbTodosCompromissos.AutoSize = true;
-            rdbTodosCompromissos.Location = new Point(25, 35);
-            rdbTodosCompromissos.Name = "rdbTodosCompromissos";
-            rdbTodosCompromissos.Size = new Size(188, 24);
-            rdbTodosCompromissos.TabIndex = 0;
-            rdbTodosCompromissos.TabStop = true;
-            rdbTodosCompromissos.Text = "Todos os Compromissos";
-            rdbTodosCompromissos.UseVisualStyleBackColor = true;
+            rdbCompromissosFuturos.AutoSize = true;
+            rdbCompromissosFuturos.Location = new Point(25, 95);
+            rdbCompromissosFuturos.Name = "rdbCompromissosFuturos";
+            rdbCompromissosFuturos.Size = new Size(177, 24);
+            rdbCompromissosFuturos.TabIndex = 0;
+            rdbCompromissosFuturos.Text = "Compromissos Futuros";
+            rdbCompromissosFuturos.UseVisualStyleBackColor = true;
             // 
             // rdbCompromissosPassados
             // 
@@ -91,20 +90,20 @@
             rdbCompromissosPassados.Name = "rdbCompromissosPassados";
             rdbCompromissosPassados.Size = new Size(188, 24);
             rdbCompromissosPassados.TabIndex = 0;
-            rdbCompromissosPassados.TabStop = true;
             rdbCompromissosPassados.Text = "Compromissos Passados";
             rdbCompromissosPassados.UseVisualStyleBackColor = true;
             // 
-            // rdbCompromissosFuturos
+            // rdbTodosCompromissos
             // 
-            rdbCompromissosFuturos.AutoSize = true;
-            rdbCompromissosFuturos.Location = new Point(25, 95);
-            rdbCompromissosFuturos.Name = "rdbCompromissosFuturos";
-            rdbCompromissosFuturos.Size = new Size(177, 24);
-            rdbCompromissosFuturos.TabIndex = 0;
-            rdbCompromissosFuturos.TabStop = true;
-            rdbCompromissosFuturos.Text = "Compromissos Futuros";
-            rdbCompromissosFuturos.UseVisualStyleBackColor = true;
+            rdbTodosCompromissos.AutoSize = true;
+            rdbTodosCompromissos.Checked = true;
+            rdbTodosCompromissos.Location = new Point(25, 35);
+            rdbTodosCompromissos.Name = "rdbTodosCompromissos";
+            rdbTodosCompromissos.Size = new Size(188, 24);
+            rdbTodosCompromissos.TabIndex = 0;
+            rdbTodosCompromissos.TabStop = true;
+            rdbTodosCompromissos.Text = "Todos os Compromissos";
+            rdbTodosCompromissos.UseVisualStyleBackColor = true;
             // 
             // TelaFiltroCompromissoForm
             // 

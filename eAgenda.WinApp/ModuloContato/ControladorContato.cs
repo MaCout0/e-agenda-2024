@@ -32,6 +32,7 @@ namespace eAgenda.WinApp.ModuloContato
 
             Contato novoContato = telaContato.Contato;
 
+
             repositorioContato.Cadastrar(novoContato);
 
             CarregarContatos();
@@ -47,6 +48,17 @@ namespace eAgenda.WinApp.ModuloContato
 
             Contato contatoSelecionado = listagemContato.ObterRegistroSelecionado();
 
+            if (contatoSelecionado == null)
+            {
+                MessageBox.Show(
+                    "Não é possível realizar esta ação sem um registro selecionado.",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
             telaContato.Contato = contatoSelecionado;
             
             DialogResult resultado = telaContato.ShowDialog();
@@ -55,7 +67,7 @@ namespace eAgenda.WinApp.ModuloContato
                 return;
 
             Contato contatoEditado = telaContato.Contato;
-                
+
             repositorioContato.Editar(contatoSelecionado.Id, contatoEditado);
 
             CarregarContatos();
@@ -68,6 +80,17 @@ namespace eAgenda.WinApp.ModuloContato
         public override void Excluir()
         {
             Contato contatoSelecionado = listagemContato.ObterRegistroSelecionado();
+
+            if (contatoSelecionado == null)
+            {
+                MessageBox.Show(
+                    "Não é possível realizar esta ação sem um registro selecionado.",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
 
             DialogResult resposta =  MessageBox.Show(
                 $"Você deseja realmente excluir o registro \"{contatoSelecionado.Nome}\"?",

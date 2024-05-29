@@ -31,6 +31,11 @@
             btnGravar = new Button();
             btnCancelar = new Button();
             groupBox1 = new GroupBox();
+            txtTerminoPeriodo = new DateTimePicker();
+            label2 = new Label();
+            txtInicioPeriodo = new DateTimePicker();
+            label1 = new Label();
+            rdbCompromissosPeriodo = new RadioButton();
             rdbCompromissosFuturos = new RadioButton();
             rdbCompromissosPassados = new RadioButton();
             rdbTodosCompromissos = new RadioButton();
@@ -41,7 +46,7 @@
             // 
             btnGravar.DialogResult = DialogResult.OK;
             btnGravar.Font = new Font("Segoe UI", 11.25F);
-            btnGravar.Location = new Point(226, 187);
+            btnGravar.Location = new Point(226, 264);
             btnGravar.Name = "btnGravar";
             btnGravar.Size = new Size(100, 37);
             btnGravar.TabIndex = 9;
@@ -53,7 +58,7 @@
             // 
             btnCancelar.DialogResult = DialogResult.Cancel;
             btnCancelar.Font = new Font("Segoe UI", 11.25F);
-            btnCancelar.Location = new Point(332, 187);
+            btnCancelar.Location = new Point(332, 264);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(100, 37);
             btnCancelar.TabIndex = 10;
@@ -62,16 +67,69 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(txtTerminoPeriodo);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(txtInicioPeriodo);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(rdbCompromissosPeriodo);
             groupBox1.Controls.Add(rdbCompromissosFuturos);
             groupBox1.Controls.Add(rdbCompromissosPassados);
             groupBox1.Controls.Add(rdbTodosCompromissos);
             groupBox1.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(420, 169);
+            groupBox1.Size = new Size(420, 246);
             groupBox1.TabIndex = 11;
             groupBox1.TabStop = false;
             groupBox1.Text = "Selecione um Filtro:";
+            // 
+            // txtTerminoPeriodo
+            // 
+            txtTerminoPeriodo.Enabled = false;
+            txtTerminoPeriodo.Format = DateTimePickerFormat.Short;
+            txtTerminoPeriodo.Location = new Point(270, 153);
+            txtTerminoPeriodo.Name = "txtTerminoPeriodo";
+            txtTerminoPeriodo.Size = new Size(116, 27);
+            txtTerminoPeriodo.TabIndex = 3;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(198, 156);
+            label2.Name = "label2";
+            label2.Size = new Size(66, 20);
+            label2.TabIndex = 2;
+            label2.Text = "Termino:";
+            // 
+            // txtInicioPeriodo
+            // 
+            txtInicioPeriodo.Enabled = false;
+            txtInicioPeriodo.Format = DateTimePickerFormat.Short;
+            txtInicioPeriodo.Location = new Point(76, 153);
+            txtInicioPeriodo.Name = "txtInicioPeriodo";
+            txtInicioPeriodo.Size = new Size(116, 27);
+            txtInicioPeriodo.TabIndex = 3;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(25, 156);
+            label1.Name = "label1";
+            label1.Size = new Size(48, 20);
+            label1.TabIndex = 2;
+            label1.Text = "Início:";
+            // 
+            // rdbCompromissosPeriodo
+            // 
+            rdbCompromissosPeriodo.AutoSize = true;
+            rdbCompromissosPeriodo.Location = new Point(25, 125);
+            rdbCompromissosPeriodo.Name = "rdbCompromissosPeriodo";
+            rdbCompromissosPeriodo.Size = new Size(232, 24);
+            rdbCompromissosPeriodo.TabIndex = 1;
+            rdbCompromissosPeriodo.TabStop = true;
+            rdbCompromissosPeriodo.Text = "Compromissos em um periodo";
+            rdbCompromissosPeriodo.UseVisualStyleBackColor = true;
+            rdbCompromissosPeriodo.CheckedChanged += rdbCompromissosPeriodo_CheckedChanged;
             // 
             // rdbCompromissosFuturos
             // 
@@ -109,7 +167,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(444, 236);
+            ClientSize = new Size(444, 313);
             Controls.Add(groupBox1);
             Controls.Add(btnGravar);
             Controls.Add(btnCancelar);
@@ -133,5 +191,10 @@
         private RadioButton rdbCompromissosFuturos;
         private RadioButton rdbCompromissosPassados;
         private RadioButton rdbTodosCompromissos;
+        private RadioButton rdbCompromissosPeriodo;
+        private DateTimePicker txtTerminoPeriodo;
+        private Label label2;
+        private DateTimePicker txtInicioPeriodo;
+        private Label label1;
     }
 }

@@ -6,7 +6,7 @@ namespace eAgenda.WinApp.ModuloCompromissos
     public class ControladorCompromisso : ControladorBase, IControladorFiltravel
     {
 
-        private ListagemCompromissoControl listagemCompromisso;
+        private TabelaCompromissoControl tabelaCompromisso;
 
         private RepositorioCompromisso repositorioCompromisso;
         private RepositorioContato repositorioContato;
@@ -60,7 +60,10 @@ namespace eAgenda.WinApp.ModuloCompromissos
 
             telaCompromisso.CarregarContatos(contatosCadastrados);
 
-            Compromisso compromissoSelecionado = listagemCompromisso.ObterRegistroSelecionado();
+            int idSelecionado = tabelaCompromisso.ObterRegistroSelecionado();
+
+            Compromisso compromissoSelecionado =
+                repositorioCompromisso.SelecionarPorId(idSelecionado);
 
             if (compromissoSelecionado == null)
             {
@@ -93,7 +96,10 @@ namespace eAgenda.WinApp.ModuloCompromissos
 
         public override void Excluir()
         {
-            Compromisso compromissoSelecionado = listagemCompromisso.ObterRegistroSelecionado();
+            int idSelecionado = tabelaCompromisso.ObterRegistroSelecionado();
+
+            Compromisso compromissoSelecionado =
+                repositorioCompromisso.SelecionarPorId(idSelecionado);
 
             if (compromissoSelecionado == null)
             {
@@ -144,29 +150,38 @@ namespace eAgenda.WinApp.ModuloCompromissos
             else if (filtroSelecionado == TipoFiltroCompromissoEnum.Futuros)
                 compromissosSelecionados = repositorioCompromisso.SelecionarCompromissosFuturos();
 
+            else if (filtroSelecionado == TipoFiltroCompromissoEnum.Periodo)
+            {
+                DateTime dataInicio = telaFiltro.InicioPeriodo;
+                DateTime dataTermino = telaFiltro.TerminoPeriodo;
+
+                compromissosSelecionados =
+                    repositorioCompromisso.SelecionarCompromissosPorPeriodo(dataInicio, dataTermino);
+            }
+
             else
                 compromissosSelecionados = repositorioCompromisso.SelecionarTodos();
 
-            listagemCompromisso.AtualizarRegistros(compromissosSelecionados);
+            tabelaCompromisso.AtualizarRegistros(compromissosSelecionados);
 
             TelaPrincipalForm.Instancia.AtualizarRodape($"Visualizando {compromissosSelecionados.Count} registros...");
         }
 
         public override UserControl ObterListagem()
         {
-            if (listagemCompromisso == null)
-                listagemCompromisso = new ListagemCompromissoControl();
+            if (tabelaCompromisso == null)
+                tabelaCompromisso = new TabelaCompromissoControl();
 
             CarregarCompromissos();
 
-            return listagemCompromisso;
+            return tabelaCompromisso;
         }
 
         private void CarregarCompromissos()
         {
             List<Compromisso> compromissos = repositorioCompromisso.SelecionarTodos();
 
-            listagemCompromisso.AtualizarRegistros(compromissos);
+            tabelaCompromisso.AtualizarRegistros(compromissos);
         }
     }
 }

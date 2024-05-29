@@ -14,7 +14,7 @@ namespace eAgenda.WinApp
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new TelaPrincipalForm());
-            //Application.Run(new TelaCompromissoForm());
+            //Application.Run(new TelaFiltroCompromissoForm());
         }
     }
 }

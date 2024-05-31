@@ -1,4 +1,5 @@
 using eAgenda.WinApp.ModuloCompromissos;
+using eAgenda.WinApp.ModuloTarefa;
 
 namespace eAgenda.WinApp
 {
@@ -14,7 +15,7 @@ namespace eAgenda.WinApp
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new TelaPrincipalForm());
-            //Application.Run(new TelaFiltroCompromissoForm());
+            //Application.Run(new TelaTarefaForm());
         }
     }
 }

@@ -1,16 +1,17 @@
 using eAgenda.WinApp.Compartilhado;
 using eAgenda.WinApp.ModuloCompromissos;
 using eAgenda.WinApp.ModuloContato;
+using eAgenda.WinApp.ModuloTarefa;
+using eAgenda.WinApp.ModuloTarefas;
 
 namespace eAgenda.WinApp
 {
     public partial class TelaPrincipalForm : Form
     {
         ControladorBase controlador;
-
         RepositorioContato repositorioContato;
-
         RepositorioCompromisso repositorioCompromisso;
+        RepositorioTarefa repositorioTarefa;
 
         public static TelaPrincipalForm Instancia { get; private set; }
 
@@ -22,8 +23,9 @@ namespace eAgenda.WinApp
 
             repositorioContato = new RepositorioContato();
             repositorioCompromisso = new RepositorioCompromisso();
+            repositorioTarefa = new RepositorioTarefa();
 
-            CadastrarRegistrosTeste();            
+            CadastrarRegistrosTeste();
         }
 
         public void AtualizarRodape(string texto)
@@ -41,6 +43,13 @@ namespace eAgenda.WinApp
         private void compromissosMenuItem_Click(object sender, EventArgs e)
         {
             controlador = new ControladorCompromisso(repositorioCompromisso, repositorioContato);
+
+            ConfigurarTelaPrincipal(controlador);
+        }
+
+        private void tarefasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controlador = new ControladorTarefa(repositorioTarefa);
 
             ConfigurarTelaPrincipal(controlador);
         }
@@ -66,6 +75,18 @@ namespace eAgenda.WinApp
                 controladorFiltravel.Filtrar();
         }
 
+        private void btnAdicionarItens_Click(object sender, EventArgs e)
+        {
+            if (controlador is IControladorSubItens controladorSubItens)
+                controladorSubItens.AdicionarItens();
+        }
+
+        private void btnConcluirItens_Click(object sender, EventArgs e)
+        {
+            if (controlador is IControladorSubItens controladorSubItens)
+                controladorSubItens.AtualizarItens();
+        }
+
         private void ConfigurarTelaPrincipal(ControladorBase controladorSelecionado)
         {
             lblTipoCadastro.Text = "Cadastro de " + controladorSelecionado.TipoCadastro;
@@ -81,6 +102,8 @@ namespace eAgenda.WinApp
             btnExcluir.Enabled = controladorSelecionado is ControladorBase;
 
             btnFiltrar.Enabled = controladorSelecionado is IControladorFiltravel;
+            btnAdicionarItens.Enabled = controladorSelecionado is IControladorSubItens;
+            btnConcluirItens.Enabled = controladorSelecionado is IControladorSubItens;
 
             ConfigurarToolTips(controladorSelecionado);
         }
@@ -93,6 +116,12 @@ namespace eAgenda.WinApp
 
             if (controladorSelecionado is IControladorFiltravel controladorFiltravel)
                 btnFiltrar.ToolTipText = controladorFiltravel.ToolTipFiltrar;
+
+            if (controlador is IControladorSubItens controladorSubItens)
+            {
+                btnAdicionarItens.ToolTipText = controladorSubItens.ToolTipAdicionarItens;
+                btnConcluirItens.ToolTipText = controladorSubItens.ToolTipConcluirItens;
+            }
         }
 
         private void ConfigurarListagem(ControladorBase controladorSelecionado)
@@ -129,6 +158,16 @@ namespace eAgenda.WinApp
             };
 
             repositorioCompromisso.CadastrarVarios(compromissos);
+
+            List<Tarefa> tarefas = new List<Tarefa>()
+            {
+                new Tarefa("Testar código da aula", PrioridadeTarefaEnum.Alta),
+                new Tarefa("Passar notas dos alunos", PrioridadeTarefaEnum.Normal),
+                new Tarefa("Reunião após aula", PrioridadeTarefaEnum.Baixa),
+                new Tarefa("Gravar vídeos", PrioridadeTarefaEnum.Alta),
+            };
+
+            repositorioTarefa.CadastrarVarios(tarefas);
         }
 
         private void TelaPrincipalForm_Load(object sender, EventArgs e)
